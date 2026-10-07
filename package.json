@@ -1,0 +1,27 @@
+{
+  "name": "file_manager",
+  "version": "1.0.0",
+  "description": "CLI File Manager Application",
+  "author": "solidados",
+  "keywords": [
+    "CLI application",
+    "file",
+    "manager"
+  ],
+  "license": "ISC",
+  "type": "module",
+  "main": "main.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "engines": {
+    "node": ">=24",
+    "npm": ">=10"
+  },
+  "scripts": {
+    "start": "node src/main.js"
+  },
+  "dependencies": {
+    "cli-table3": "^0.6.5"
+  }
+}
