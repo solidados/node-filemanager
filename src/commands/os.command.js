@@ -1,11 +1,10 @@
 import { arch, cpus, EOL, homedir, userInfo } from "node:os";
+import { OS_FLAGS } from '../constants/constants.js';
 
 export function handleOsCommand(argsArr) {
-  const flags = ['--EOL', '--cpus', '--homedir', '--username', '--architecture'];
-
   if (argsArr !== null && argsArr.length === 1) {
     const flagInput = argsArr[0];
-    if (flags.includes(flagInput)) {
+    if (OS_FLAGS.includes(flagInput)) {
       if (flagInput === '--EOL') console.log(`EOL: ${JSON.stringify(EOL)}`);
       if (flagInput === '--homedir') console.log(`Home Directory: ${ homedir() }`);
       if (flagInput === '--architecture') console.log(`Architecture: ${ arch() }`)

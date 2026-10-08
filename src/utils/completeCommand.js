@@ -1,6 +1,6 @@
 import { readdir } from "node:fs/promises";
 import { resolve, sep } from "node:path";
-import { COMMANDS_LIST, PATH_COMPLETION } from "../constants/constants.js";
+import { COMMANDS_LIST, OS_FLAGS, PATH_COMPLETION } from "../constants/constants.js";
 
 export async function completeCommand ( line, currentDirectory ) {
   const spaceIndex = line.indexOf(" ");
@@ -34,6 +34,14 @@ export async function completeCommand ( line, currentDirectory ) {
 
   const activeIndex = argsParts.length - 1;
 
+  if (command === 'os') {
+    if (activeIndex === 0) {
+      const hits = OS_FLAGS.filter(flag => flag.startsWith(argsParts[0]))
+      return [hits, argsParts[0]];
+    }
+    return [[], line];
+  }
+
   const rawPartialPath = argsParts.at(-1);
   const partialPath = rawPartialPath.startsWith('"')
     ? rawPartialPath.slice(1)
@@ -43,6 +51,8 @@ export async function completeCommand ( line, currentDirectory ) {
   const directoryPart = partialPath.slice(0, lastSep + 1);
   const namePrefix = partialPath.slice(lastSep + 1);
   const searchDirectory = resolve(currentDirectory, directoryPart);
+
+  if (command === 'rm' && activeIndex === 1 && argsParts[0] !== '-r') return [[], line]
 
   const rule = PATH_COMPLETION[command]?.find(item => item.argumentIndex === activeIndex);
   if (!rule) return [ [], line ];
