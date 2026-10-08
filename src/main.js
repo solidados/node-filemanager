@@ -3,8 +3,9 @@ import { exit, stdin, stdout } from 'node:process'
 import * as readline from "node:readline/promises";
 import { PREFIX } from './constants/constants.js';
 import {
+  completeCommand,
   parseArgs,
-  parseCommandArgs
+  parseCommandArgs,
 } from "./utils/index.js";
 import {
   handleAddCommand,
@@ -42,6 +43,7 @@ function start() {
   const rl = readline.createInterface({
     input: stdin,
     output: stdout,
+    completer: (line) => completeCommand(line, currentDirectory)
   })
 
   rl.setPrompt(PREFIX);
